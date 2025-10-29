@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
     <data-source source="LOCAL" name="lost_items" uuid="f0edf353-90af-406b-8d1a-1c43d70cb3c2">
-      <driver-ref>sqlite.xerial</driver-ref>
+      <driver-ref>1a636578-b670-4335-bc75-60a3b8f67b08</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\seonh\IdeaProjects\LostAndFoundProject\lost_items.db</jdbc-url>

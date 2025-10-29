@@ -2,6 +2,8 @@ package ui;
 
 import dao.LostItemDAO;
 import model.LostItem;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,13 +51,32 @@ public class LostItemApp {
     }
 
     private void showItems() {
-        List<LostItem> items = dao.getAllItems();
+        System.out.println("정렬 기준을 선택하세요 (여러 개 가능, 쉼표로 구분)");
+        System.out.println("1. 날짜순  2. 이름순  3. 장소순  4. 상태순  (예: 1,3)");
+        System.out.print("선택: ");
+        String input = sc.nextLine();
+
+        String[] choices = input.split(",");
+        List<String> orderByList = new ArrayList<>();
+
+        for (String choice : choices) {
+            switch (choice.trim()) {
+                case "1" -> orderByList.add("date");
+                case "2" -> orderByList.add("name");
+                case "3" -> orderByList.add("location");
+                case "4" -> orderByList.add("status");
+            }
+        }
+
+        List<LostItem> items = dao.getAllItems(orderByList);
         if (items.isEmpty()) {
             System.out.println("등록된 분실물이 없습니다.");
         } else {
+            System.out.println("\n=== 정렬 결과 ===");
             items.forEach(System.out::println);
         }
     }
+
 
     private void updateStatus() {
         System.out.print("상태를 변경할 ID: ");

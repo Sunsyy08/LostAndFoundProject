@@ -42,9 +42,24 @@ public class LostItemDAO {
         }
     }
 
-    public List<LostItem> getAllItems() {
+    public List<LostItem> getAllItems(List<String> orderByList) {
         List<LostItem> items = new ArrayList<>();
         String sql = "SELECT * FROM lost_items";
+
+        if (orderByList != null && !orderByList.isEmpty()) {
+            sql += " ORDER BY ";
+            for (int i = 0; i < orderByList.size(); i++) {
+                String orderBy = orderByList.get(i);
+                switch (orderBy.toLowerCase()) {
+                    case "date" -> sql += "found_date DESC";
+                    case "name" -> sql += "item_name ASC";
+                    case "location" -> sql += "location ASC";
+                    case "status" -> sql += "status ASC";
+                }
+                if (i < orderByList.size() - 1) sql += ", "; // 여러 정렬 기준 연결
+            }
+        }
+
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {

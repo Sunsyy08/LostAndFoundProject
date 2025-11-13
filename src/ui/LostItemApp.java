@@ -21,8 +21,10 @@ public class LostItemApp {
             System.out.println("0. 종료");
             System.out.print("선택: ");
 
-            int choice = sc.nextInt();
-            sc.nextLine(); // 버퍼 정리
+            int choice = -1;
+            try {
+                choice = Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException ignored) {}
 
             switch (choice) {
                 case 1 -> addItem();
@@ -40,13 +42,18 @@ public class LostItemApp {
 
     private void addItem() {
         System.out.print("물건 이름: ");
-        String name = sc.nextLine();
+        String name = sc.nextLine().trim();
         System.out.print("분실 장소: ");
-        String loc = sc.nextLine();
+        String loc = sc.nextLine().trim();
         System.out.print("분실 날짜(YYYY-MM-DD): ");
-        String date = sc.nextLine();
+        String date = sc.nextLine().trim();
+        System.out.print("학번(5자리, 예: 20607) - 없으면 Enter: ");
+        String studentId = sc.nextLine().trim();
+        System.out.print("상세 설명 (예: 검은색 지갑, 안에 학생증 포함): ");
+        String description = sc.nextLine().trim();
 
-        dao.addLostItem(new LostItem(name, loc, date, "보관 중"));
+        LostItem item = new LostItem(name, loc, date, "보관 중", description, studentId);
+        dao.addLostItem(item);
         System.out.println("✅ 등록 완료!");
     }
 
@@ -77,19 +84,16 @@ public class LostItemApp {
         }
     }
 
-
     private void updateStatus() {
         System.out.print("상태를 변경할 ID: ");
-        int id = sc.nextInt();
-        sc.nextLine();
+        int id = Integer.parseInt(sc.nextLine().trim());
         dao.updateStatus(id, "찾아감");
         System.out.println("✅ 상태가 '찾아감'으로 변경되었습니다.");
     }
 
     private void deleteItem() {
         System.out.print("삭제할 ID: ");
-        int id = sc.nextInt();
-        sc.nextLine();
+        int id = Integer.parseInt(sc.nextLine().trim());
         dao.deleteItem(id);
         System.out.println("✅ 삭제 완료!");
     }

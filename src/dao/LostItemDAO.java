@@ -10,7 +10,7 @@ public class LostItemDAO {
 
     public LostItemDAO() {
         createTableIfNotExists();
-        addMissingColumns(); // 기존 DB에 새 컬럼이 없으면 추가 시도
+        addMissingColumns();
     }
 
     private void createTableIfNotExists() {
@@ -47,7 +47,6 @@ public class LostItemDAO {
                 try {
                     stmt.execute(sql);
                 } catch (SQLException ignored) {
-                    // 컬럼이 이미 존재하면 예외가 발생. 무시하고 계속 진행.
                 }
             }
         } catch (SQLException e) {
